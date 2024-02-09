@@ -17,12 +17,16 @@ class VMMC_model:
 
     def _initialize_positions(self):
         N = sum(len(strand) for strand in self.base_types_strands)
+        num_strands = len(self.base_types_strands)
         positions = np.zeros((N, 3))
         current_index = 0
-        for strand in self.base_types_strands:
+        y_spacing = self.container_height / (num_strands + 1)  # Evenly distribute along y-axis
+        z_spacing = self.container_depth / (N + 1)  # Evenly distribute along z-axis
+        for i, strand in enumerate(self.base_types_strands):
             strand_length = len(strand)
-            for i in range(strand_length):
-                positions[current_index + i] = (i + 1, current_index // 2.5 + 1, i + 1)
+            x_spacing = self.container_depth / (strand_length + 1)  # Spread out along x-axis
+            for j in range(strand_length):
+                positions[current_index + j] = ((j + 1) * x_spacing, (i + 1) * y_spacing, (current_index + j + 1) * z_spacing)
             current_index += strand_length
         return positions
 
@@ -128,8 +132,11 @@ base_types_strand1 = np.array(['A', 'T', 'C', 'G', 'G', 'G', 'C', 'G'])
 base_types_strand2 = np.array(['T', 'A', 'G', 'C', 'G', 'C', 'C', 'G'])
 base_types_strand3 = np.array(['A', 'T', 'T', 'T', 'A', 'A', 'T', 'A'])
 base_types_strand4 = np.array(['T', 'A', 'A', 'T', 'T', 'T', 'A', 'T'])
+base_types_strand5 = np.array(['G', 'C', 'A', 'T', 'C', 'G', 'A', 'T'])
+base_types_strand6 = np.array(['T', 'G', 'C', 'A', 'T', 'G', 'C', 'A'])
 
-base_types_strands = [base_types_strand1, base_types_strand2, base_types_strand3, base_types_strand4]
+
+base_types_strands = [base_types_strand1, base_types_strand2, base_types_strand3, base_types_strand4, base_types_strand5, base_types_strand6]
 
 interaction_strengths = {
     ('A', 'T'): 1.0,
