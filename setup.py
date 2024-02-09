@@ -8,7 +8,7 @@ setup(
         'numpy',
         'matplotlib',
     ],
-    author='James H. Broster',
+    author='James_Broster',
     author_email='james.broster@st-annes.ox.ac.uk',
     description='A brief description of your package',
     long_description=open('README.md').read(),
